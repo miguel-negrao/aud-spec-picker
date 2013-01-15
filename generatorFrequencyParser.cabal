@@ -1,10 +1,10 @@
-name:           generatorFrequencyParser
+name:           aud-spec-picker
 version:        0.1
 cabal-version:  >= 1.2
 build-type:     Simple
 author:         miguelnegrao
 
-executable generatorFrequencyParser
+executable aud-spec-picker
   hs-source-dirs:  src
   main-is:         Main.hs
   build-depends:   
@@ -12,7 +12,8 @@ executable generatorFrequencyParser
                    ssv,
                    MissingH,
                    data-accessor,
-                   csv
+                   csv,
+                   cmdargs
 
-  ghc-options:     -Wall -rtsopts -O3
+  ghc-options:     -Wall -rtsopts -O2 -XDeriveDataTypeable
 
