@@ -3,8 +3,10 @@ aud-spec-picker
 
 Get the frequencies with highest energy from an exported file from audacity's spectrum analyser
 
-Parse audacity spectrum analysis files
+Parses audacity spectrum analysis files, searching for the N frequencies with higher energy.
+Will discard frequencies fd which are closer to an already selected frequency f if f/fd < delta
 
+```
 args [OPTIONS] INPUTFILE OUTPUTFILE
 
 Common flags:
@@ -12,3 +14,4 @@ Common flags:
   -n --numfreqs=INT  number of frequencies
   -? --help          Display help message
   -V --version       Print version information
+```
