@@ -1,0 +1,18 @@
+name:           generatorFrequencyParser
+version:        0.1
+cabal-version:  >= 1.2
+build-type:     Simple
+author:         miguelnegrao
+
+executable generatorFrequencyParser
+  hs-source-dirs:  src
+  main-is:         Main.hs
+  build-depends:   
+                   base >= 4,
+                   ssv,
+                   MissingH,
+                   data-accessor,
+                   csv
+
+  ghc-options:     -Wall -rtsopts -O3
+
