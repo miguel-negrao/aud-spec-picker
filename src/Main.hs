@@ -24,23 +24,26 @@ parseFromAudacity::String -> [[Double]]
 parseFromAudacity string =  map (map read) x
         where _:x = readSSV tabFormat string
         
-getFreqs:: Double -> [[Double]] -> [Double]
+getFreqs:: Double -> [[Double]] -> [[Double]]
 getFreqs delta xs = similarRemoved
         where 
                 sorted = reverse $ sortBy (comparing (\(_:b:_) -> b) ) xs
-                justFreqs = (transpose sorted) !! 0
-                similarRemoved = foldl f [] justFreqs
+                similarRemoved = foldl f [] sorted
                 f [] x = [x]
-                f st x = st ++ (if notNearOtherFreqs then [x] else []) 
-                        where notNearOtherFreqs = foldl (&&) True $ map (\y -> absRat (y/x) > delta ) st          
+                f st x@(f:a:_) = st ++ (if notNearOtherFreqs then [x] else []) 
+                        where notNearOtherFreqs = foldl (&&) True $ map (\(f':a':_) -> absRat (f'/f) > delta ) st          
 
-toCSV::[Double] -> String
-toCSV xs = foldl (++) "" $ map (\x -> (show x) ++ "\n" ) xs
+toCSV::[[Double]] -> String
+toCSV xs = foldl (++) "" $ map (\(x:y:_) -> (show x) ++ ", " ++ (show y) ++ "\n" ) xs
 
 processFile :: Double -> Int -> String -> String -> IO ()
 processFile delta numFreqs inputPath outputPath = do
-        file <- readFile (inputPath)
-        let result = toCSV $ sort $ take numFreqs $ ((getFreqs delta) . parseFromAudacity) file 
+        file <- readFile (inputPath)        
+        let 
+                parsed = parseFromAudacity file                
+                below120 = take 2 $ getFreqs delta $ filter (\(a:_:_) -> a < 120) parsed
+                above120 = take (numFreqs-2) $ getFreqs delta $ filter (\(a:_:_) -> a >= 120) parsed
+                result = toCSV $ sort $ below120 ++ above120  
         writeFile outputPath result
         --putStr result 
         
