@@ -1,4 +1,4 @@
-aud-spec-picker
+aud-spec-picker [![Build Status](https://travis-ci.org/miguel-negrao/aud-spec-picker.svg?branch=master)](https://travis-ci.org/miguel-negrao/aud-spec-picker)
 ===============
 
 Get the frequencies with highest energy from an exported file from audacity's spectrum analyser
